@@ -1,0 +1,193 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage[english]{babel}
+\usepackage[UTF8]{ctex}
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\title{PaperReading}
+\author{linzy}
+\date{September 28, 2024}
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+\section{Glueball}
+
+% \subsection{New parton distribution functions from a global analysis of quantum chromodynamics }
+% Title: New parton distribution functions from a global analysis of quantum chromodynamics.\cite{Dulat:2015mca}
+
+\subsection{Gluons in glueballs: Spin or helicity}
+Title: Gluons in glueballs: Spin or helicity. \cite{Mathieu:2008bf}
+
+这篇文章提出了一些新的关于胶子自旋的处理方法的讨论，通过它的讨论结果构造了一种哈密顿量模型，并得到了两胶子体系的能谱结构，并将其与格点的结果进行比较。值得一提的是，这篇文章中提到了关于瞬时相互作用对于哈密顿量的不可或缺的意义。
+
+这篇文章中提到了一些关于胶球系统和QCD等的一些基础概念：
+
+Like other effective approaches of QCD, potential models still have difficulties to cope
+with gluonic hadrons. Assuming that glueballs are bound states of valence gluons with zero current
+mass, it is readily understood that the use of a potential model, intrinsically non covariant, could
+be problematic in this case.
+
+在处理涉及到胶子的强子时，很多有效模型都遇到了困难。这里还提到了一点有趣的结论：胶球是0流质量的价胶子。
+
+The main challenge for this kind of model is actually to find a way
+to introduce properly the more relevant degree of freedom of the gluon: spin or helicity.
+
+对于胶子来说，描述它的关于自旋的自由度选择自旋还是螺旋度是一个很关键的问题。
+
+As quantum chromodynamics (QCD) is built on the nonabelian SU(3)-color group, it allows for purely gluonic bound states called glueballs.
+
+量子色动力学建立在SU（3）的颜色群上，所以允许一种仅包含胶子的基态，叫做胶球（glueball）。
+
+On the other hand, pure gauge QCD has been investigated by lattice QCD for many years, leading to a well established glueball spectrum below 4 GeV [2, 3].
+
+在这篇文章的参考文献2,3中，介绍了由格点计算的胶球能谱。
+
+ As a bound state of two gluons can only have
+$C = +$, it is rather natural to assume that the lightest glueballs are mainly two-gluon states (the more constituent gluons are present, the more the glueball should be heavy).
+
+这里提到了很重要的一点，关于胶子系统的宇称。由于宇称的限制，最轻的胶子系统应当包含两个胶子。但是关于\textcolor{red}{如何确定整个系统的$J^{PC}$宇称}，这是一个非常重要但是复杂的问题，甚至我认为这作为一个量子数应当在构建基态时就进行处理，需要进一步对其进行研究。
+
+ Moreover, it is interesting to mention some results of the Coulomb gauge study of Ref. [8]. In this approach, a Fock space expansion of glueball states in terms of quasigluons can be performed, and it appears that the influence of the three- and four-gluon components on the low-lying $C = +$ glueballs is negligible: The two-gluon component is dominant as intuitively expected.
+
+对于在\textcolor{red}{福克空间}中展开的胶球系统，他们采取\textcolor{red}{库伦规范}。为什么有这样的要求？在参考文献8中也许有这个问题的答案。在福克空间展开中，三胶子，四胶子组分仅占了很小的比例，主要是二胶子的系统。
+
+
+In this picture, the valence gluon is a posteriori massive, because it is confined into a glueball. Let us note that, more generally, both quarks and gluons can gain a constituent mass from renormalization theory (in the Coulomb gauge approach of Ref. [14], massless gluons gain a constituent mass of about 0.7 GeV at
+zero momentum). But, other studies keep the assumptions of Ref. [10] and state that a valence gluon has to be a
+priori considered as massive, that is with a non zero current mass [10, 15].
+
+在参考文献10,14,15中提出了对于胶子质量的两种不同的处理方式，也是本文的核心讨论部分。
+
+Moreover, the glueball spectrum
+is now far better known than at the time of Ref. [9] thanks to lattice QCD calculations [2, 3].
+
+参考文献2,3,9中介绍了格点计算胶球质量谱的结果。
+
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=0.85\linewidth]{figure/1.1.1.png}
+%     \caption{格点计算胶球质量谱的结果}
+%     \label{fig:enter-label}
+% \end{figure}
+It is of great phenomenological interest to be able to express a given helicity state in terms of states of given orbital angular momentum L and intrinsic spin S.
+
+关于角动量和自旋的\textcolor{red}{波函数}是一个非常引人关注的点。这篇文章中同样花了较小的篇幅介绍相关波函数的处理和作用，但是并没有给出计算结果。
+
+In particular, the necessity of adding
+instanton-induced forces should not be seen as a flaw of the model, but rather as a way to be more coherent with
+other studies showing that instantons contribute in glueballs.
+
+加入\textcolor{red}{瞬时相互作用项}是一种更接近物理的要求而非单纯的模型上的调整。
+
+
+
+\subsection{The glueball spectrum from an anisotropic lattice study}
+Title: The glueball spectrum from an anisotropic lattice study. \cite{Morningstar:1999rf}
+
+\subsection{The Status of Glueballs.}
+Title: The Status of Glueballs. \cite{ochs2013status}
+
+
+\subsection{吕晓睿-郑州暑期学校}
+
+PPT中介绍了一些BESIII的实验，其中包括了$J/ \Psi$的衰变中可能的与胶球相关的部分。（P31）
+
+\url{https://indico.ihep.ac.cn/event/24901/contributions/199839/attachments/94226/123556/0824%E5%90%95%E6%99%93%E7%9D%BF-LYU_%E9%83%91%E5%B7%9E%E8%AE%B2%E4%B9%A0%E7%8F%AD2025.pdf}
+
+BESIII的介绍，其中有关于胶球的实验的详细的信息。
+
+\url{https://indico.ihep.ac.cn/event/19694/contributions/133803/attachments/69026/82586/BJLiu_BESIII500.pdf}
+
+
+
+
+
+
+
+
+
+\section{QCD Theory}
+
+\subsection{Symmetries of baryons and mesons}
+Title:Symmetries of baryons and mesons \cite{Gell-Mann:1962yej}
+
+在R. D. Field - Applications of Perturbative QCD 的附录D中引用了这篇文章，其中包含了最早的关于colorfactor的讨论。
+
+文章中并未具体介绍如何计算某一个ColorFactor， 这里讨论了重子和介子中存在的群结构。其内容接近于国科大粒子物理基础课程中对于对称性的介绍，认为系统中存在$U(3) \times U(3)$的对称性。
+
+不是特别有用的文章，等有空以后再研究其技术细节。
+
+
+\section{Structure Function}
+
+\subsection{Polarized Parton Distributions and Future Neutrino Factories}
+
+
+Title:Polarized Parton Distributions from Charged–Current Deep-Inelastic Scattering and Future Neutrino Factories \cite{Forte:2001ph}
+
+里面是关于PDF的讨论，重要的是详细的介绍了强子张量。
+
+\subsection{Parton Distribution Functions and their Generalizations}
+
+Title:Parton Distribution Functions and their Generalizations\cite{partondistributionfunctionsgeneralizations}.
+
+李阳推荐的综述，介绍了，PDF,TMF,GPD的一些信息。
+
+
+
+\section{Review}
+
+\subsection{Light front QCD in a transverse harmonic oscillator basis}
+
+李阳的综述，介绍了很多BLFQ的细节,特别是谐振子相关的。其中第六页开始介绍了动能项的部分。
+
+\url{https://github.com/Linzy2002/Docunment/blob/main/notes_LFQCD_HObasis_v8.pdf}
+
+
+\subsection{A Friendly Introduction to the Light Front}
+
+系列讲座，内容非常的具体和基础。以后写毕业论文用得到。
+\url{https://indico.knu.ac.kr/event/718/}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+\bibliographystyle{plain}
+\bibliography{sample}
+
+\end{document}

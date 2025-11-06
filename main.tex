@@ -176,7 +176,37 @@ Title:Parton Distribution Functions and their Generalizations\cite{partondistrib
 
 李阳推荐的综述，介绍了，PDF,TMF,GPD的一些信息。
 
+\section{GFF}
 
+\subsection{Gravitational form factors and mechanical properties of quarks in protons: A basis light-front quantization approach}
+
+Title:Gravitational form factors and mechanical properties of quarks in protons:
+A basis light-front quantization approach \cite{nair2024gravitationalformfactorsmechanical}
+
+Raj介绍的如何从波函数计算得到GFF的文章。
+
+QCD中规范不变的张量？EMT的形式如下：
+
+\begin{equation}
+    \begin{aligned}
+    \theta^{\mu \nu}= & \frac{1}{2} \bar{\psi} i\left[\gamma^\mu D^\nu+\gamma^\nu D^\mu\right] \psi-F^{\mu \lambda a} F_{\lambda a}^\nu+\frac{1}{4} g^{\mu \nu}\left(F_{\lambda \sigma a}\right)^2 \\
+    & -g^{\mu \nu} \bar{\psi}\left(i \gamma^\lambda D_\lambda-m\right) \psi,
+    \end{aligned}
+\end{equation}
+
+
+将这个张量放入态矢中可以得到下面的形式：
+
+\begin{equation}
+    \begin{aligned}
+    \left\langle P^{\prime}, \Lambda^{\prime}\right| \theta_i^{\mu \nu}(0)|P, \Lambda\rangle= & \bar{u}\left(P^{\prime}, \Lambda^{\prime}\right)\left[-B_i\left(Q^2\right) \frac{\bar{P}^\mu \bar{P}^\nu}{M}+\left(A_i\left(Q^2\right)\right.\right. \\
+    & \left.+B_i\left(Q^2\right)\right) \frac{1}{2}\left(\gamma^\mu \bar{P}^\nu+\gamma^\nu \bar{P}^\mu\right) \\
+    & +C_i\left(Q^2\right) \frac{q^\mu q^\nu-q^2 g^{\mu \nu}}{M} \\
+    & \left.+\bar{C}_i\left(Q^2\right) M g^{\mu \nu}\right] u(P, \Lambda)
+    \end{aligned}
+\end{equation}
+
+其中A的部分就是GFF。态矢可以在blfq的基矢上展开，最终可以得到由blfq方法计算得到的GFF。
 
 \section{Review}
 
@@ -191,6 +221,37 @@ Title:Parton Distribution Functions and their Generalizations\cite{partondistrib
 
 系列讲座，内容非常的具体和基础。以后写毕业论文用得到。
 \url{https://indico.knu.ac.kr/event/718/}
+
+更新了地址：
+
+\url{https://indico.knu.ac.kr/category/10/}
+
+\subsection{Nucleon Structure from Basis Light-Front
+Quantization : Status and Prospects}
+
+Chandon写的综述文章，仔细介绍了blfq的工作成果。
+
+其中在3.1部分有关于质心系得处理方法的详细介绍：
+
+By choosing $\lambda_L$ sufficiently large and positive, we elevate the excited CM states to
+higher energies while preserving the low-lying physical states. The complete effective
+Hamiltonian for diagonalization becomes:
+
+\begin{equation}
+    H_{\mathrm{eff}}^{\prime}=H_{\mathrm{eff}}-\left(\sum_i \boldsymbol{p}_{i \perp}\right)^2+\lambda_L\left(H_{\mathrm{CM}}-2 b^2 I\right) .
+\end{equation}
+
+
+在第二章有关于福克空间展开的介绍：
+
+The Fock space expansion of the eigenstate, given in Eq. (3), provides a natural
+basis for solving the LF Hamiltonian eigenvalue equation, Eq. (1). This expansion
+leads to an infinite hierarchy of coupled integral equations, which must be truncated
+for practical computation. This structure is reminiscent of the Dyson–Schwinger and
+Bethe–Salpeter equations in covariant formulations. The Light-Front Tamm–Dancoff
+Approximation (LFTDA) achieves this truncation by limiting the Fock space to a
+finite number of partons [267]. 
+
 
 
 

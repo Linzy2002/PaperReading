@@ -313,7 +313,11 @@ x_{31} & x_{32} & x_{33}
 $$
 
 
+\subsection{Glueballs from the Bethe-Salpeter equation}
 
+Title: \quad  Glueballs from the Bethe-Salpeter equation\cite{PhysRevD.92.034001}
+
+Bethe-Salpeter equation (BSE)计算胶球。 得到的结果在1.6左右。 可以用来了解这个方法。和DSE可能有一些联系。
 
 \section{QCD Theory}
 
@@ -414,6 +418,28 @@ $T^{\mu \nu}=2 \operatorname{Tr}\left[-F_\alpha^\mu F^{\alpha \nu}+\frac{1}{4} g
 Title: Gravitational form factors of charmonia \cite{PhysRevD.109.114024}
 
 计算Charmonian的GFF文章。要作为计算胶球的文章的baseline。
+
+GFF中的A可以由本征方程通过这种方式计算得到：
+
+\begin{equation}
+    \begin{aligned}
+    A\left(q_{\perp}^2\right)= & \sum_n \sum_{\left\{s_i\right\}} \int\left[\mathrm{d} x_i \mathrm{~d}^2 k_{i \perp}\right]_n \\
+    & \times \sum_j x_j \psi_n\left(\left\{x_i, \vec{k}_{i \perp}, s_i\right\}\right) \psi_n\left(\left\{x_i, \vec{k}_{i, j \perp}, s_i\right\}\right),
+    \end{aligned}
+\end{equation}
+
+在原文的公式53，引用了[168]参考文献。
+
+
+\subsection{Lattice evidence that scalar glueballs are small}
+
+Title: \quad  Lattice evidence that scalar glueballs are small \cite{abbott2025latticeevidencescalarglueballs}
+
+GFF可以和半径联系起来：
+
+\begin{equation}
+    r_{\mathrm{mass}, \mathrm{BF}}^2=\frac{1}{A(0)}\left[\left.6 \frac{d A(t)}{d t}\right|_{t=0}-\frac{3}{4 m^2}(A(0)+2 D(0))\right],
+\end{equation}
 
 
 \section{Review}

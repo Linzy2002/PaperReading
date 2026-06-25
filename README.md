@@ -59,5 +59,5 @@ Title: \quad 论文标题 \cite{bibkey}
 
 ## 联系
 
-研究者：**linzy**  
-研究方向：胶球（glueball）物理 / 量子色动力学  
+研究者：**linzy@impcas.ac.cn**  
+研究方向：胶球（glueball）物理 / 量子色动力学 / AI4Science / 矩阵微扰理论

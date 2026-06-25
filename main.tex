@@ -10,7 +10,9 @@
 
 % Useful packages
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{graphicx}
+\usepackage{booktabs}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 
 \title{PaperReading}
@@ -865,6 +867,320 @@ Title: \quad Heavy Quarkonium in a Holographic Basis \cite{Li_2016}
 Title: \quad Heavy Quarkonium Spectrum and Decay Constants from a Neural-Network-Based Holographic Model \cite{zhang2026heavyquarkonium}
 
 这是一篇用神经网络做 bottom-up AdS/QCD 模型的工作。作者没有使用传统的解析ansatz（如软墙模型中的二次dilaton），而是用多层感知机（MLP）学习dilaton场的导数$\Phi'(z)$作为全息坐标的光滑函数，并施加$\Phi(0)=0$的边界条件以保证紫外一致性。通过对dilaton及其导数的自动微分生成全息势$U(z)$，将对应的类薛定谔方程离散化对角化得到低能模式。本征值和bulk-to-boundary模式在近边界的行为给出质量谱和衰变常数。使用PDG上粲偶素和底偶素的实验数据进行训练，得到的非二次dilaton profile同时解决了重夸克偶素能谱和轻子衰变常数随径向激发单调压低的长期难题。拟合的RMS偏差分别为1.26\%（粲偶素）和3.32\%（底偶素）。文章展示了神经网络重建作为全息建模的灵活工具，并为未来扩展到其他道、格点约束或有限温度背景提供了基础。
+
+
+\section{Matrix Perturbative Theory}
+
+\textbf{导言：}本章节不是单篇论文的笔记，而是为作者正在进行的 \textbf{BLFQ 胶球研究中"扩张福克空间"的收敛性问题} 整理的一份研究级数学工具综述。在 BLFQ 中，福克空间截断为
+\[
+|G\rangle \;=\; |gg\rangle + |ggg\rangle + |gggg\rangle+\cdots,
+\]
+随着 Fock sector 数 $N$ 的增加，哈密顿量具有\textbf{嵌套块结构}
+\[
+H_{N+1} \;=\; \begin{pmatrix} H_{N} & V_{N} \\ V_{N}^{\dagger} & D_{N} \end{pmatrix},\qquad H_{2}\subset H_{3}\subset H_{4}\subset\cdots.
+\]
+与通常的微扰论不同，这里矩阵的\textbf{维度本身在变化}。本节的目标是为这种"扩张希尔伯特空间"中的本征值收敛、外推与有效哈密顿量构造等问题建立严格的数学框架。下面的 9 个小节对应研究任务中列出的 9 个核心问题，第 10 个小节整理核心数学量，最后给出推荐阅读顺序。所有定理仅给出表述与证明思路，完整证明见引用的原始文献。
+
+\subsection{Q1: 维数变化下的矩阵微扰}
+
+\textbf{动机：}BLFQ 中哈密顿量并非固定一个 $n\times n$ 矩阵然后做 $\epsilon\to 0$ 的微扰，而是 $n\to\infty$ 同时矩阵元结构在改变。经典 Kato 微扰论处理的是固定空间内的扰动 \cite{Kato_1976}，因此不能直接套用。这里需要的是\textbf{谱逼近理论}（spectral approximation）与\textbf{Galerkin/Ritz 方法}。
+
+\textbf{关键定义（投影逼近框架）：}设 $A$ 是 Hilbert 空间 $\mathcal{H}$ 上的自伴算子，$\{P_{n}\}$ 是一列有限秩正交投影，$P_{n}\mathcal{H}\subset P_{n+1}\mathcal{H}$，$\mathrm{rank}\,P_{n}\to\infty$。离散本征值问题
+\[
+A_{n} \;\equiv\; P_{n} A P_{n}\big|_{P_{n}\mathcal{H}},\qquad A_{n}u_{n}=\lambda_{n}u_{n},
+\]
+被称为 Galerkin 逼近。$\{P_{n}\}$ 单调上升，$H_{N}\subset H_{N+1}$ 正好对应这一框架。
+
+\textbf{主要定理（Krasnoselskii 及其后续）：}设 $A$ 自伴、下方有界、具有紧预解式（或纯点谱且孤立本征值）。则对于任意一个孤立本征值 $\lambda$（重数 $r$）：
+\begin{enumerate}
+    \item 当 $n$ 充分大时，$A_{n}$ 在 $\lambda$ 附近恰好有 $r$ 个本征值 $\lambda_{n}^{(1)},\dots,\lambda_{n}^{(r)}$；
+    \item 这些本征值收敛到 $\lambda$；
+    \item 若 $\lambda$ 不在本质谱中，谱投影 $P_{n}(\lambda_{n})$ 在 Hilbert--Schmidt 范数下收敛到 $P(\lambda)$。
+\end{enumerate}
+
+\textbf{证明思路：}通过预解式 $(A-z)^{-1}$ 在包围 $\lambda$ 但不包围其他谱的小围道 $\Gamma$ 上的积分定义 Riesz 投影 $P_{\lambda}=-(2\pi i)^{-1}\oint_{\Gamma}(A-z)^{-1}dz$。当 $n$ 足够大时 $(A_{n}-z)^{-1}P_{n}$ 也在 $\Gamma$ 上一致逼近 $(A-z)^{-1}$，于是投影的秩守恒，本征值被围道内的连续性"锁住"。
+
+\textbf{与 BLFQ 的联系：}只要把 $A$ 想成完整的 light-front QCD 哈密顿量（作用在所有 Fock sector 上），把 $P_{n}$ 想成截断到前 $n$ 个 sector 的投影，整个福克空间的扩张过程就完全落入 Galerkin 框架。困难在于：（i）完整的 LF-QCD 哈密顿量不是紧预解式算子（含有连续谱），需要更精细的本征值簇分析；（ii）BLFQ 中同时还截断了相对论不变量（$N_{\max},K$），这是另一层 Galerkin 逼近。
+
+\textbf{推荐阅读：}\cite{Kato_1976} 第七章（紧投影收敛）、\cite{Reed_Simon_1978} 第八卷 XIII.1--XIII.2、\cite{Chatelin_1983} 整本书专门讨论谱逼近。
+
+\subsection{Q2: 块矩阵微扰与 Schur 补}
+
+\textbf{动机：}嵌套结构 $H_{N+1}=\bigl(\begin{smallmatrix} H_{N}&V_{N}\\ V_{N}^{\dagger}&D_{N}\end{smallmatrix}\bigr)$ 的核心问题：能否在不解整个 $H_{N+1}$ 的情况下，仅通过 $H_{N}$ 与耦合块 $V_{N},D_{N}$ 估计新的本征值？这正是 Schur 补与有效哈密顿量的用武之地。
+
+\textbf{关键定义（Schur 补）：}设 $H=\bigl(\begin{smallmatrix} A&B\\B^{\dagger}&D\end{smallmatrix}\bigr)$，若 $D$ 可逆，则 $D$ 关于 $H$ 的 Schur 补为
+\[
+S_{D}(H) \;=\; A - B D^{-1} B^{\dagger},
+\]
+对应 $H$ 的"上块消元"。若 $A$ 可逆，对称地有 $S_{A}(H)=D-B^{\dagger}A^{-1}B$。Schur 补的核心恒等式：
+\[
+\det H \;=\; \det D\cdot\det S_{D}(H).
+\]
+经典参考为 \cite{Zhang_2005_Schur}。
+
+\textbf{本征值关系（Haynsworth 惯性定理）：}$H$ 与 $D\oplus S_{D}(H)$ 的惯性（正、负、零本征值个数）相同。这是块矩阵定号性的基石。
+
+\textbf{有效哈密顿量推导（能量依赖）：}本征方程 $H_{N+1}\psi=E\psi$，分块 $\psi=(\psi_{\mathrm{low}},\psi_{\mathrm{high}})$，消去高能块 $\psi_{\mathrm{high}}=-(D-E)^{-1}V^{\dagger}\psi_{\mathrm{low}}$，得到
+\[
+\boxed{\;H_{\mathrm{eff}}(E)\;\equiv\;H_{N} \;+\; V_{N}\,(E-D_{N})^{-1}\,V_{N}^{\dagger}\;}
+\]
+这是 \textbf{能量依赖的有效哈密顿量}（self-energy 形式），其本征方程 $H_{\mathrm{eff}}(E)\psi_{\mathrm{low}}=E\psi_{\mathrm{low}}$ 是非线性本征值问题。
+
+\textbf{近似有效性：}若 $E$ 远离 $D_{N}$ 的谱（即存在 \emph{谱隙} $\Delta=\mathrm{dist}(E,\sigma(D_{N}))>0$），且 $\|V_{N}\|/\Delta<1$，则上式可展开为
+\[
+H_{\mathrm{eff}}(E) \;=\; H_{N} + V_{N}(E-D_{N})^{-1}V_{N}^{\dagger} + O\!\left(\frac{\|V_{N}\|^{3}}{\Delta^{2}}\right).
+\]
+
+\textbf{物理意义：}高 Fock sector 通过虚粒子过程对低 sector 产生"自能"修正，这正是 QFT 中 self-energy 的算子形式。在 BLFQ 中这意味着：\emph{原则上可以不解整个 $|ggg\rangle$ 块，仅用 $|gg\rangle$ + self-energy 修正就逼近物理本征值}。
+
+\textbf{推荐阅读：}\cite{Zhang_2005_Schur}（Schur 补权威综述）、\cite{Horn_Johnson_2013} 第 0、4 章。
+
+\subsection{Q3: 经典本征值微扰定理}
+
+\textbf{动机：}虽然 BLFQ 中维数变化，但每一步 $H_{N}\to H_{N+1}$ 仍可视为"小扰动 + 维数扩张"的复合过程。经典矩阵微扰给出本征值漂移的\textbf{绝对上界}，是 Q7、Q10 中量化估计的基础。
+
+\textbf{Weyl 定理 \cite{Weyl_1912}：}设 $A,B\in\mathbb{C}^{n\times n}$ 均为 Hermite，按本征值升序排列 $\lambda_{1}\le\dots\le\lambda_{n}$。则
+\[
+\max_{i}\,|\lambda_{i}(A+B)-\lambda_{i}(A)| \;\le\; \|B\|_{2}.
+\]
+\emph{直观：}Hermite 算子的本征值对扰动是 Lipschitz 连续的，常数恰为算子范数。
+
+\textbf{Bauer--Fike 定理 \cite{Bauer_Fike_1960}（可对角化情形）：}若 $A=V\Lambda V^{-1}$ 可对角化，则对任意本征值 $\mu$ of $A+E$，存在 $A$ 的本征值 $\lambda$ 使得
+\[
+|\mu-\lambda|\;\le\;\kappa_{2}(V)\,\|E\|_{2},
+\]
+其中 $\kappa_{2}(V)=\|V\|_{2}\|V^{-1}\|_{2}$ 是特征向量矩阵的条件数。\emph{物理含义：}非正规算子的本征值可能极其敏感（$\kappa\gg 1$），而 Hermite 哈密顿量自动 $\kappa=1$。
+
+\textbf{Davis--Kahan $\sin\theta$ 定理 \cite{Davis_Kahan_1970}：}设 $A$ Hermite，$A+E=A'$，关注不变子空间 $P$（对应 $A$ 在区间 $\Delta$ 内的谱）与扰动后的 $P'$。若存在谱隙使得 $A$ 在 $[\lambda_{-},\lambda_{+}]$（不含 $\Delta$）外有谱，则
+\[
+\|\sin\Theta(P,P')\| \;\le\; \frac{\|E\|}{\mathrm{gap}},
+\]
+其中 $\mathrm{gap}$ 是 $\Delta$ 与其余谱之间的距离。\emph{这是本征向量扰动的基本工具}，Q6 中会再次用到。
+
+\textbf{是否对维数变化稳健？}\textcolor{red}{关键警告：}三个经典定理都假设 $A,A+E$ 维数相同。在 BLFQ 中需配合 Q1 的 Galerkin 框架使用：先证明 $A_{n}\to A$ 的谱收敛（Q1），再在固定维数下用 Weyl/Bauer--Fike/Davis--Kahan 估计扰动步 $H_{n}\to H_{n+1}$ 的局部漂移，最后用三角不等式拼出全局界。
+
+\textbf{推荐阅读顺序：}\cite{Bhatia_1997}（本征值变分的优美导论）$\to$\cite{Bhatia_2007}（专门讲本征值扰动界）$\to$\cite{Stewart_Sun_1990}（矩阵微扰全书）。
+
+\subsection{Q4: 谱收敛}
+
+\textbf{动机：}Q1 给出了"收敛"这一事实，Q4 关心\emph{收敛速度}。在 BLFQ 中这对应：每加一个 Fock sector，本征值改变多少？能否预测 $E_{N}-E_{\infty}$？
+
+\textbf{关键概念（算子收敛的层级）：}对自伴算子列 $\{A_{n}\}$：
+\begin{itemize}
+    \item \textbf{强收敛}：$A_{n}\psi\to A\psi$ 对所有 $\psi$；
+    \item \textbf{范数收敛}：$\|A_{n}-A\|\to 0$（过强，BLFQ 中通常不成立）；
+    \item \textbf{强预解式收敛（SR）}：$(A_{n}-z)^{-1}\psi\to(A-z)^{-1}\psi$，$z\in\mathbb{C}\setminus\mathbb{R}$；
+    \item \textbf{范数预解式收敛（NR）}：$\|(A_{n}-z)^{-1}-(A-z)^{-1}\|\to 0$。
+\end{itemize}
+层级为 NR $\Rightarrow$ SR $\Rightarrow$ 强收敛；谱收敛的最有用准则是 \textbf{NR}（Kato 第七章定理）。
+
+\textbf{Kato--Temple 界（收敛速度）：}若 $\lambda$ 是 $A$ 的孤立简单本征值，与最近邻本质谱距离 $\delta>0$，且已有 Rayleigh 商 $\mu=\langle u,Au\rangle$ 满足 $|\mu-\lambda|<\delta$，则
+\[
+|\mu-\lambda|\;\le\;\frac{\varepsilon^{2}}{\delta-\varepsilon},\qquad \varepsilon=\|(A-\mu)u\|.
+\]
+对 Galerkin 序列可导出 $|\lambda_{n}-\lambda|\lesssim C\,\mathrm{dist}(u,P_{n}\mathcal{H})^{2}$，即收敛速度由\emph{精确本征向量在截断基下的最佳逼近误差}决定。
+
+\textbf{Galerkin 收敛速率（对称椭圆问题）：}若 $u$ 属于 Sobolev 空间 $H^{m}$，用 $k$ 次有限元，则
+\[
+|\lambda_{n}-\lambda| \;\lesssim\; h^{2k}\,\|u\|_{H^{k+1}}^{2}.
+\]
+在 BLFQ 中，"基函数阶数"$k$ 类比于 HO 基的纵向 $K$ 与横向 $N_{\max}$，$\|u\|_{H^{m}}$ 类比于 LFWF 在大动量处的衰减速度。
+
+\textbf{物理意义：}福克空间收敛速率由两个因素决定：\textbf{(i) 高 Fock sector 的权重衰减有多快}（$g_{\mathrm{eff}}(N)$ 见 Q10），\textbf{(ii) 每个 sector 内 BLFQ 基对 LFWF 的逼近能力}（即 $N_{\max},K$ 收敛）。这两层收敛需要分离分析。
+
+\textbf{推荐阅读：}\cite{Chatelin_1983}（谱逼近全书）、\cite{Reed_Simon_1978}（算子收敛的泛函分析基础）。
+
+\subsection{Q5: Rayleigh--Ritz 理论}
+
+\textbf{动机：}回答一个简单而基本的问题：\emph{为什么扩大基矢后基态能量单调下降？}
+
+\textbf{Courant--Fischer 极小极大原理：}对 Hermite 算子 $A$，第 $k$ 个本征值（升序）满足
+\[
+\lambda_{k}(A) \;=\; \min_{\dim S=k}\;\max_{\psi\in S,\,\|\psi\|=1}\;\langle\psi,A\psi\rangle.
+\]
+等价的极大-极小形式：$\lambda_{k}=\max_{\dim S=n-k+1}\min_{\psi\in S}\langle\psi,A\psi\rangle$。
+
+\textbf{Rayleigh--Ritz 定理：}设 $V\subset\mathcal{H}$ 是子空间，$\dim V=n$，则 $A$ 限制到 $V$ 上的本征值 $\lambda_{k}^{(V)}$ 满足\textbf{交错不等式}
+\[
+\lambda_{k}(A) \;\le\; \lambda_{k}^{(V)} \;\le\; \lambda_{k+( \dim\mathcal{H}-n)}(A),
+\]
+对有限维取上界即 $\lambda_{k}^{(V)}\ge\lambda_{k}(A)$。
+
+\textbf{单调下降的证明：}$V\subset W\Rightarrow$ 取极小的搜索空间更大，故 $\lambda_{k}^{(W)}\le\lambda_{k}^{(V)}$。直接推论：BLFQ 中每加一个 Fock sector 或加大 $N_{\max}$，基态能量\textbf{单调不增}。
+
+\textbf{变分原理：}$E_{0}\le\langle\psi,H\psi\rangle/\langle\psi,\psi\rangle$ 对所有 $\psi$ 成立。
+
+\textbf{收敛速率估计：}对基态，Kato--Temple 给出 $\lambda_{0}^{(V)}-\lambda_{0}\le \|(H-\lambda_{0}^{(V)})u_{0}^{(V)}\|^{2}/\mathrm{gap}$。
+
+\textbf{与 BLFQ 的关系：}这是 BLFQ（以及任何变分方法）的\textbf{基石}：截断基越大，质量谱下界越紧。\textcolor{red}{物理直觉：变分法给出的是上界，真正的物理质量 $\le$ BLFQ 计算值。}当 $N_{\max}$ 或 Fock sector 数增加时质量下降，这正是 \cite{Li_2016} 等文章中观察到的现象。
+
+\textbf{推荐阅读：}\cite{Reed_Simon_1978}（泛函分析视角）、\cite{Trefethen_Bau_1997}（数值线性代数视角）。
+
+\subsection{Q6: 本征向量的微扰}
+
+\textbf{动机：}BLFQ 中常问：$N\to N+1$ 时，原基态本征向量 $u_{N}\to u_{N+1}$ 的\emph{重叠}$|\langle u_{N},u_{N+1}\rangle|$ 是多少？这决定 self-energy 修正的大小。
+
+\textbf{主角度（principal angles）：}两个子空间 $U,V$ 之间的第 $k$ 个主角度 $\theta_{k}$ 由 $\cos\theta_{k}=\max_{u\in U,v\in V}\langle u,v\rangle$ 递归定义。Davis--Kahan 用 $\sin\theta$ 度量不变子空间距离。
+
+\textbf{Davis--Kahan $\sin\theta/\sin\theta_{\mathrm{gap}}$ 定理：}在 Q3 给出的形式之外，更精细的版本是
+\[
+\|\sin\Theta(U,V)\| \;\le\; \frac{\|E\|}{\mathrm{gap}}\cdot\begin{cases}1 & \text{一般情形}\\ 2 & \text{更弱假设}\end{cases}.
+\]
+对单个本征向量，$|\sin\theta|\approx \|u-u'\|$（小角度时）。
+
+\textbf{重叠估计：}若 $u_{N+1}=u_{N}+\delta u$，则一阶扰动理论给出 $\delta u=\sum_{k\ne 0}\frac{\langle u_{k},E u_{0}\rangle}{\lambda_{0}-\lambda_{k}}u_{k}$，于是
+\[
+|\langle u_{N},u_{N+1}\rangle|^{2} \;=\; 1 - \|\delta u\|^{2} + O(\|E\|^{3}).
+\]
+\emph{物理应用：}在 BLFQ 中，$u_{N}$ 主要是 $|gg\rangle$ 分量，$u_{N+1}$ 含 $|ggg\rangle$ 分量，二者的重叠直接给出"低 Fock sector 占主导"的定量判据。
+
+\textbf{推荐阅读：}\cite{Davis_Kahan_1970} 原始论文（$\sin\theta$ 定理的各种变体）、\cite{Stewart_Sun_1990} 第四章。
+
+\subsection{Q7: 低秩更新}
+
+\textbf{动机：}若 $H_{N+1}$ 与 $H_{N}$ 仅差一个秩为 $r$ 的更新（例如新增的 sector 维数 $r\ll N$），能否用 $H_{N}$ 的谱快速预测 $H_{N+1}$ 的谱？
+
+\textbf{Sherman--Morrison--Woodbury 公式 \cite{Sherman_Morrison_1950,Woodbury_1950}：}对非奇异 $A$ 与秩 $r$ 更新 $UV^{\dagger}$（$U,V\in\mathbb{C}^{n\times r}$）：
+\[
+(A+UV^{\dagger})^{-1} \;=\; A^{-1} - A^{-1}U\,(I_{r}+V^{\dagger}A^{-1}U)^{-1}V^{\dagger}A^{-1}.
+\]
+求逆从 $O(n^{3})$ 降到 $O(r^{3}+nr^{2})$。
+
+\textbf{秩 1 更新的本征值：}对 $A+\rho uu^{\dagger}$（$\rho\in\mathbb{R}$），新本征值 $\lambda'$ 满足 secular 方程
+\[
+1+\rho\,\sum_{k}\frac{|u_{k}|^{2}}{\lambda_{k}-\lambda'} \;=\; 0,
+\]
+其中 $\lambda_{k}$ 是 $A$ 的本征值，$u_{k}=\langle v_{k},u\rangle$。\emph{物理上：}这形式上等价于 Q2 的 self-energy 方程。
+
+\textbf{增量特征值求解器（incremental eigensolver）：}基于分块结构与低秩更新，可以在已有谱的基础上用 Newton/Newton-Raphson 在 secular 方程上快速求解新的本征对。这对 BLFQ 中"逐步增加 sector"的流程极有吸引力。
+
+\textbf{是否能预测新本征对？}在 $\|V_{N}\|/\Delta\ll 1$ 假设下，可以：用 Q2 的有效哈密顿量 + Q3 的 Weyl 界。完整理论见 \cite{Golub_VanLoan_2013} 第 8 章（分块特征值方法）。
+
+\textbf{推荐阅读：}\cite{Golub_VanLoan_2013}（数值线性代数圣经）、\cite{Stewart_Sun_1990}（低秩更新的扰动分析）。
+
+\subsection{Q8: Krylov 子空间方法}
+
+\textbf{动机：}不直接用于 BLFQ 截断，而是理解\emph{基增长时本征向量的演化}——Lanczos/Arnoldi 本质上是在原矩阵的 Krylov 子空间上做 Rayleigh--Ritz。
+
+\textbf{Lanczos 算法 \cite{Lanczos_1950}：}对 Hermite $A$ 与起始向量 $r_{0}$，构造标准正交基 $\{q_{1},\dots,q_{m}\}$ 张成 $\mathcal{K}_{m}(A,r_{0})=\mathrm{span}\{r_{0},Ar_{0},\dots,A^{m-1}r_{0}\}$。投影矩阵 $T_{m}=Q_{m}^{\dagger}AQ_{m}$ 是三对角 Hermite，其本征值（Ritz 值）$\theta_{i}^{(m)}$ 收敛到 $A$ 的极端本征值，收敛速度为 $|\theta_{i}^{(m)}-\lambda_{i}|\sim C\,\kappa_{i}^{m}$（$\kappa_{i}<1$ 依赖谱隙）\cite{Saad_1980_Lanczos}。
+
+\textbf{Arnoldi：}Lanczos 的非 Hermite 推广，$T_{m}$ 变为上 Hessenberg。
+
+\textbf{Thick Restart / Davidson：}实用大维度特征值方法。Davidson 方法通过预条件迭代，在量子化学和核物理中常用。完整综述见 \cite{Saad_2011}。
+
+\textbf{与 BLFQ 的联系：}\textcolor{red}{关键概念桥梁——}Krylov 子空间通过 $A^{k}r_{0}$ 扩张基，每步只加一个维度，且新基是旧基在 $A$ 作用下的像。这给"扩张基中的本征向量演化"提供了一个清晰的小模型：Lanczos 的 Ritz 向量如何随 $m$ 演化，可以作为 BLFQ 中 Fock sector 扩张的\textbf{简化类比}。
+
+\textbf{推荐阅读：}\cite{Saad_2011}（现代大尺度特征值方法）、\cite{Trefethen_Bau_1997} 第 31--33 章。
+
+\subsection{Q9: 有效哈密顿量方法}
+
+\textbf{动机：}Q2 用 Schur 补推出能量依赖的有效哈密顿量，Q9 比较物理化学中已有的几种"积掉高能自由度"的等价方法。
+
+\textbf{Feshbach 投影 \cite{Feshbach_1958}：}设 $P+Q=I$（$P$ 投影到感兴趣的低能子空间，$Q$ 投影到高能区）。精确本征方程退化为
+\[
+\bigl[PHP + PHQ(E-QHQ)^{-1}QHP\bigr]\,P\psi \;=\; E\,P\psi.
+\]
+方括号内第二项正是 Q2 中的 self-energy $\Sigma(E)$。\emph{这是核物理与量子场论中最通用的形式。}
+
+\textbf{L\"owdin 划分 \cite{Lowdin_1951}：}Feshbach 方法在量子化学中的等价形式，常写成 $\tilde{H}_{\mathrm{eff}}=PHP+PHQ(E_{0}-QHQ)^{-1}QHP$（用参考能量 $E_{0}$ 替代 $E$）。L\"owdin 的贡献是系统地用它做分子轨道理论。
+
+\textbf{Bloch 有效哈密顿量 \cite{Bloch_Dalton_1957}：}定义能量无关的算子 $H_{B}=PHP+PHQ\,\frac{1}{E-QHQ}\,QHP$ 通过 Bloch 算子构造，使得 $H_{B}P\psi=E P\psi$ 同时 $H_{B}$ 与 $H$ 在 $P$ 空间内本征值相同。Bloch 形式的好处是 $H_{B}$ \emph{可以显式写成能量无关的形式}（代价是非 Hermite）。
+
+\textbf{Schrieffer--Wolff 变换 \cite{Schrieffer_Wolff_1966,Bravyi_2011_SchriefferWolff}：}通过酉变换 $e^{S}He^{-S}$ 把 $H$ 块对角化到 $O(\|V\|/\Delta)$ 精度。$S$ 由反 Hermite 方程 $[H_{0},S]=V_{\text{off-diag}}$ 解出。这是凝聚态物理中构造有效模型的标准工具（Anderson$\to$Kondo 映射的原始推导）。
+
+\textbf{三种方法的比较：}
+\begin{center}
+\begin{tabular}{lccc}
+\hline
+方法 & 能量依赖 & Hermite & 适用 \\
+\hline
+Feshbach & 是 & 是 & 核/粒子物理 \\
+L\"owdin & 取参考值 & 是 & 量子化学 \\
+Bloch & 否 & 否 & 核谱 \\
+Schrieffer--Wolff & 否 & 是（酉等价） & 凝聚态 \\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{与 Schur 补的关系：}\textcolor{red}{统一观点}——所有方法本质上都是 Schur 补的物理化包装，区别仅在"是否保留能量依赖性"与"是否要求 Hermite"。BLFQ 中推荐使用 Feshbach 形式：能量依赖最物理，直接对应 self-energy 图。
+
+\subsection{Q10: 核心数学量与外推律}
+
+\textbf{动机：}整理研究任务中明确点名的三个数学量，给出文献依据与可能的研究方向。
+
+\subsubsection*{(a) 块耦合范数 $g_{\mathrm{eff}}(N)\equiv\|V_{N}\|$}
+
+\textbf{定义：}邻接 Fock sector 间耦合块的算子范数（或 Frobenius 范数）。在物理上衡量"加入新 sector 带来的扰动强度"。
+
+\textbf{文献依据：}矩阵微扰文献中此量作为 $\|E\|$ 出现在所有 Weyl/Bauer--Fike/Davis--Kahan 界中。在 QFT 中对应的物理量是顶角函数在大动量处的衰减行为（Weinberg 定理给出定性收敛）。
+
+\textbf{开放问题：}\textcolor{red}{是否有文献研究 $g_{\mathrm{eff}}(N)$ 随 $N$ 的衰减律？}目前未见专门针对福克空间扩张的系统研究。在 BLFQ 中通常以 $1/N$ 或几何衰减 $r^{N}$ 为预期，但缺严格证明。这是一个可发表的方向。
+
+\subsubsection*{(b) 自能算子 $\Sigma_{N}(E)\equiv V_{N}(E-D_{N})^{-1}V_{N}^{\dagger}$}
+
+\textbf{定义：}Q2 中能量依赖有效哈密顿量的二阶项。这是 Schur 补 $A-BD^{-1}B^{\dagger}$ 的扰动展开（注意符号：能量依赖时 $D\to E-D$）。
+
+\textbf{数学性质：}
+\begin{itemize}
+    \item $\Sigma_{N}(E)$ 在 $\sigma(D_{N})$ 外是 $E$ 的解析函数；
+    \item 当 $E$ 接近 $D_{N}$ 的本征值时有极点；
+    \item $\|\Sigma_{N}(E)\|\le \|V_{N}\|^{2}/\mathrm{dist}(E,\sigma(D_{N}))$。
+\end{itemize}
+
+\textbf{文献依据：}Feshbach \cite{Feshbach_1958} 原文给出 $\Sigma(E)$ 的所有基本性质。数学上等价于 Schur 补 \cite{Zhang_2005_Schur}。
+
+\textbf{在 BLFQ 中的应用：}原则上可以仅用 $H_{2}$（$|gg\rangle$）+ $\Sigma_{2},\Sigma_{3},\dots$（通过迭代或拟合 $g_{\mathrm{eff}}$）逼近完整 $E_{\infty}$，避免显式构造 $|gggg\rangle$ 等高维 sector。
+
+\subsubsection*{(c) 本征值修正 $E_{N+1}-E_{N}$}
+
+\textbf{目标：}建立 $E_{N+1}-E_{N}\sim -|V_{N}|^{2}/\Delta_{N}$ 形式的严格估计。
+
+\textbf{推导思路：}由 Q5，扩大基后能量下降；由 Q2，下降量约为 self-energy 的本征值偏移。在一阶微扰 + 谱隙 $\Delta_{N}$ 假设下：
+\[
+\boxed{\;E_{N+1}-E_{N}\;\approx\;-\,\langle u_{N},\Sigma_{N}(E_{N})u_{N}\rangle\;\sim\;-\,\frac{|V_{N}|^{2}}{\Delta_{N}}.\;}
+\]
+\emph{负号}来自 Rayleigh--Ritz：变分上界单调下降。\emph{这是一个二阶公式，精确到 $O(\|V_{N}\|^{3}/\Delta_{N}^{2})$。}
+
+\textbf{文献依据：}经典微扰论见 \cite{Kato_1976} 第 II 章；自能形式见 \cite{Feshbach_1958}。
+
+\subsubsection*{(d) 无穷维外推律}
+
+\textbf{目标：}寻找 $E_{N}=E_{\infty}+C N^{-p}$ 或 $E_{N}=E_{\infty}+Ce^{-aN}$ 的实证规律。
+
+\textbf{文献证据：}
+\begin{itemize}
+    \item \textbf{指数收敛}：在解析 LFWF 假设下（HO 基展开系数呈 $e^{-\alpha n}$ 衰减），Kato--Temple 给出 $E_{N}-E_{\infty}\sim e^{-aN}$。\cite{Reed_Simon_1978} XIII.9 节。
+    \item \textbf{幂律收敛}：若 LFWF 在动量空间只有有限阶光滑性，则收敛为幂律。
+    \item \textbf{格点 QCD 经验}：格点文献常用 $E_{L}=E_{\infty}+C(a\Lambda)^{p}$（$a$ 格距，$p=1$ 或 2）外推，与 BLFQ 的 $N_{\max}$ 外推同构。
+\end{itemize}
+
+\textbf{BLFQ 现有证据：}见 \cite{Li_2016} 等的 $N_{\max}$ 收敛图。Fock sector 维度的收敛律尚未有系统研究。
+
+\textbf{推荐阅读：}\cite{Kato_1976}（指数收敛的一般理论）、\cite{Reed_Simon_1978}（谱逼近的泛函分析）、\cite{Chatelin_1983}（数值谱逼近）。
+
+\subsection{Q11: 推荐阅读顺序与优先级}
+
+\begin{enumerate}
+    \item \textbf{入门（1--2 周）：}\cite{Trefethen_Bau_1997} 第 1--5 章（数值线性代数直觉）+ \cite{Bhatia_1997} 第 1--3 章（本征值变分优美导论）。
+    \item \textbf{经典矩阵微扰（2--3 周）：}\cite{Stewart_Sun_1990} 全书（重点第 4、5 章本征值与本征向量扰动）+ \cite{Davis_Kahan_1970} 原始论文。
+    \item \textbf{算子微扰与谱逼近（3--4 周）：}\cite{Kato_1976} 第 2、4、7 章（核心）+ \cite{Reed_Simon_1978} XIII 卷（物理风格）。
+    \item \textbf{Schur 补与有效哈密顿量（1--2 周）：}\cite{Zhang_2005_Schur}（Schur 补）+ \cite{Feshbach_1958}（原始物理文献）+ \cite{Schrieffer_Wolff_1966,Bravyi_2011_SchriefferWolff}（SW 变换的现代版）。
+    \item \textbf{数值实现（2 周）：}\cite{Golub_VanLoan_2013} 第 7、8、10 章 + \cite{Saad_2011}（大尺度特征值方法）。
+    \item \textbf{谱逼近深入（可选）：}\cite{Chatelin_1983}（专门讨论有限维逼近对算子谱的影响）。
+\end{enumerate}
+
+\textbf{最高优先级}（必须精读）：\cite{Kato_1976}（无法绕开的经典）+ \cite{Stewart_Sun_1990}（矩阵微扰最权威）+ \cite{Davis_Kahan_1970}（$\sin\theta$ 定理）+ \cite{Feshbach_1958}（self-energy 形式）。
+
+\textbf{与 BLFQ 研究的对接点：}
+\begin{itemize}
+    \item 用 Q1+Q4 框架分析 Fock sector 收敛；
+    \item 用 Q2+Q9 构造能量依赖有效哈密顿量，避免显式大 sector 对角化；
+    \item 用 Q10 的 $E_{N+1}-E_{N}$ 公式做实证外推律研究；
+    \item 用 Q5 的 Rayleigh--Ritz 解释"质量随截断下降"现象；
+    \item 用 Q6+Q7 的重叠估计量化"低 sector 主导"。
+\end{itemize}
+
+\textcolor{red}{开放研究方向：}$g_{\mathrm{eff}}(N)$ 的衰减律证明、BLFQ 中 Fock sector 收敛速率的严格界、self-energy 重求和方法、Sector-增量特征值算法——这些都是潜在的发表方向。
 
 
 \newpage
